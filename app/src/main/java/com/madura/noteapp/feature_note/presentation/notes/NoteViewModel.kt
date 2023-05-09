@@ -1,6 +1,7 @@
 package com.madura.noteapp.feature_note.presentation.notes
 
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -33,6 +34,7 @@ class NoteViewModel @Inject constructor(
     }
 
     fun onEvent(event: NotesEvent) {
+
         when (event) {
             is NotesEvent.Order -> {
                 if (state.value.noteOrder::class == event.noteOrder::class &&
@@ -40,7 +42,7 @@ class NoteViewModel @Inject constructor(
                 ) {
                     return
                 }
-                getNotes(noteOrder = state.value.noteOrder)
+                getNotes(noteOrder = event.noteOrder)
             }
 
             is NotesEvent.DeleteNote -> {

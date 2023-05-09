@@ -7,6 +7,7 @@ import com.madura.noteapp.feature_note.data.repository.NoteRepositoryImpl
 import com.madura.noteapp.feature_note.domain.repository.NoteRepository
 import com.madura.noteapp.feature_note.domain.use_case.AddNoteUseCase
 import com.madura.noteapp.feature_note.domain.use_case.DeleteNoteUseCase
+import com.madura.noteapp.feature_note.domain.use_case.GetNoteUseCase
 import com.madura.noteapp.feature_note.domain.use_case.GetNotesUseCase
 import com.madura.noteapp.feature_note.domain.use_case.NoteUseCases
 import dagger.Module
@@ -44,7 +45,8 @@ object AppModule {
         return NoteUseCases(
             getNotesUseCase = GetNotesUseCase(repository = repository),
             deleteNoteUseCase = DeleteNoteUseCase(repository = repository),
-            addNoteUseCase = AddNoteUseCase(repository = repository)
+            addNoteUseCase = AddNoteUseCase(repository = repository),
+            getNoteUseCase = GetNoteUseCase(repository = repository)
         )
     }
 }
