@@ -93,7 +93,6 @@ fun NotesScreen(
             ) {
                 OrderSection(
                     onOrderChange = {
-                        Log.d("OrderSection","order selection----->>>>>>> ${it.orderType}")
                         viewModel.onEvent(NotesEvent.Order(it))
                     },
                     noteOrder = state.noteOrder,

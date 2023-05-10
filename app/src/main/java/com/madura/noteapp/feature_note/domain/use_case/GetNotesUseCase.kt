@@ -21,7 +21,6 @@ class GetNotesUseCase(
                         is NoteOrder.Date -> notes.sortedBy { it.timestamp }
                         is NoteOrder.Color -> notes.sortedBy { it.color }
                     }
-
                 }
 
                 is OrderType.Descending -> {

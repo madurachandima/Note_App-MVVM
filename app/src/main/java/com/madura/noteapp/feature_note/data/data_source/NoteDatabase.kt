@@ -1,6 +1,5 @@
 package com.madura.noteapp.feature_note.data.data_source
 
-import androidx.room.Dao
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.madura.noteapp.feature_note.domain.model.Note

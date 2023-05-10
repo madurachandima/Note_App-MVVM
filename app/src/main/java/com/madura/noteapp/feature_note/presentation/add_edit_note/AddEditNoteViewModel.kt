@@ -11,8 +11,10 @@ import com.madura.noteapp.feature_note.domain.model.Note
 import com.madura.noteapp.feature_note.domain.use_case.NoteUseCases
 import com.madura.noteapp.feature_note.presentation.notes.NotesState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,9 +32,12 @@ class AddEditNoteViewModel @Inject constructor(
 
     private val _noteColor = mutableStateOf(Note.noteColors.random().toArgb())
     val noteColor: State<Int> = _noteColor
+//
+//    private val _eventFlow = MutableSharedFlow<UiEvent>()
+//    val eventFlow = _eventFlow.asSharedFlow()
 
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
+    private val _eventChannel = Channel<UiEvent>()
+    val eventChannel = _eventChannel.receiveAsFlow()
 
     private var currentNoteId: Int? = null
 
@@ -99,9 +104,9 @@ class AddEditNoteViewModel @Inject constructor(
                                 id = currentNoteId
                             )
                         )
-                        _eventFlow.emit(UiEvent.SaveNote)
+                        _eventChannel.send(UiEvent.SaveNote)
                     } catch (e: InvalidNoteException) {
-                        _eventFlow.emit(
+                        _eventChannel.send(
                             UiEvent.ShowSnackbar(
                                 message = e.message ?: "Couldn't save note"
                             )
@@ -111,18 +116,6 @@ class AddEditNoteViewModel @Inject constructor(
             }
 
         }
-
-//        when (event) {
-//            is AddEditNoteEvent.EnteredTitle -> {
-//                _noteTitle.value = noteTitle.value.copy(
-//                    text = event.value
-//                )
-//            }
-//
-//            else -> {
-//
-//            }
-//        }
     }
 
     sealed class UiEvent {
